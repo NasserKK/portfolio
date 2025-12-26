@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>UX/UI Case — Pirâmide 360 ERP</title>
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Tailwind Dark Mode Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#5b7fff',
+            darkbg: '#0f0f12',
+            darkcard: '#1a1a1f',
+            darktext: '#c9c9d1',
+          }
+        }
+      }
+    }
+  </script>
+
+</head>
+<body class="bg-darkbg text-darktext font-sans">
+
+  <!-- Sidebar -->
+  <aside class="fixed left-0 top-0 h-screen w-64 bg-darkcard border-r border-gray-800 p-6 flex flex-col">
+    <h2 class="text-2xl font-bold text-white mb-8">My Portfolio</h2>
+
+    <nav class="flex-1">
+      <ul class="space-y-4 text-lg">
+        <li><a href="index.html" class="hover:text-primary">← Back</a></li>
+        <li><a href="#overview" class="hover:text-primary">Overview</a></li>
+        <li><a href="#context" class="hover:text-primary">Context</a></li>
+        <li><a href="#role" class="hover:text-primary">My Role</a></li>
+        <li><a href="#example" class="hover:text-primary">Flow Example</a></li>
+        <li><a href="#impact" class="hover:text-primary">Impact</a></li>
+        <li><a href="#learning" class="hover:text-primary">Learnings</a></li>
+      </ul>
+    </nav>
+
+    <footer class="text-sm text-gray-500">
+      © 2025 — Nasser Khalil
+    </footer>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="ml-64 p-12 space-y-16">
+
+    <!-- Hero Section -->
+    <section id="hero" class="space-y-4">
+      <h1 class="text-5xl font-bold text-white">UX/UI Case — Pirâmide 360 ERP</h1>
+      <p class="text-lg text-gray-400">
+        Migration from desktop ERP to Web + creation of the Gizé Design System.
+      </p>
+
+      <!-- Placeholder -->
+      <div class="w-full h-72 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500 text-xl">
+        CASE IMAGE HERE (hero)
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overview" class="space-y-4">
+      <h2 class="text-3xl font-semibold text-white">Overview</h2>
+      <p>
+        Pirâmide 360 ERP is an enterprise platform used by mid and large-sized companies.
+        The modernization required migrating more than <strong>1300 screens</strong> to the Web,
+        along with the creation of a scalable new Design System.
+      </p>
+    </section>
+
+    <!-- Context -->
+    <section id="context" class="space-y-4">
+      <h2 class="text-3xl font-semibold text-white">Problem Context</h2>
+
+      <p>
+        The original desktop system had technical limitations, compromised usability,
+        and accumulated inconsistencies over the years — requiring a full rebuild and 
+        the creation of a Design System to standardize the entire platform.
+      </p>
+
+      <!-- Placeholder -->
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        OLD SCREENS IMAGE HERE
+      </div>
+    </section>
+
+    <!-- My Role -->
+    <section id="role" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">My Role</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">1. Analysis & Understanding</h3>
+          <p>Interviews with internal users, study of the system manual, and flow mapping.</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">2. UX Redesign</h3>
+          <p>Reorganization of information hierarchy, flow simplification, and prototyping.</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">3. UI & Design System</h3>
+          <p>Active participation in the creation of Gizé and new components.</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">4. Validation</h3>
+          <p>Internal testing of critical flows and alignment with developers.</p>
+        </div>
+      </div>
+
+      <!-- Placeholder -->
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        DESIGN SYSTEM COMPONENTS HERE
+      </div>
+    </section>
+
+    <!-- Example Flow -->
+    <section id="example" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Redesigned Flow Example — Product Management</h2>
+
+      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+        <h3 class="text-xl font-bold text-white">Before (Desktop)</h3>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>More than 40 fields visible simultaneously.</li>
+          <li>Lack of visual hierarchy.</li>
+          <li>Fragmented process.</li>
+          <li>High error rate.</li>
+        </ul>
+      </div>
+
+      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+        <h3 class="text-xl font-bold text-white">After (Web)</h3>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>Divided into logical tabs.</li>
+          <li>New "field-group" component in the Design System.</li>
+          <li>Continuous flow on a single page.</li>
+          <li>Informative tooltips for fiscal fields.</li>
+        </ul>
+      </div>
+
+      <!-- Placeholder -->
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        BEFORE / AFTER COMPARISON IMAGE HERE
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section id="impact" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Impact</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">50%</p>
+          <p>reduction in registration time</p>
+        </div>
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">40%</p>
+          <p>fewer internal errors</p>
+        </div>
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">30%</p>
+          <p>improvement in learning curve</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learnings -->
+    <section id="learning" class="space-y-4 mb-32">
+      <h2 class="text-3xl font-semibold text-white">Learnings</h2>
+
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Complex business rules of ERPs.</li>
+        <li>Conducting research with real users.</li>
+        <li>Decision-making based on usability heuristics.</li>
+        <li>Creation and scalability of Design Systems.</li>
+        <li>Multidisciplinary collaboration and technical alignment.</li>
+      </ul>
+    </section>
+
+    <!-- Technologies Used -->
+<section id="tech" class="space-y-6">
+  <h2 class="text-3xl font-semibold text-white">Technologies Used</h2>
+
+  <p class="text-gray-400">
+    Tools, methodologies and technologies that supported the redesign, research,
+    prototyping and collaboration workflow throughout the project.
+  </p>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+
+    <!-- Icon Placeholder -->
+    <div class="bg-darkcard border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center">
+      <div class="w-12 h-12 rounded-md mb-3"><img src="./imgs/figma.png" alt="" srcset=""></div>
+      <p class="text-sm text-gray-300">Figma</p>
+    </div>
+
+    <!-- Icon Placeholder -->
+    <div class="bg-darkcard border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center">
+      <div class="w-12 h-12 rounded-md mb-3"><img src="./imgs/wordpress.png" alt="" srcset=""></div>
+      <p class="text-sm text-gray-300">Wordpress</p>
+    </div>
+
+  </div>
+
+</section>
+  </main>
+
+  <!-- jQuery smooth scroll -->
+  <script>
+    $("nav a").on("click", function(e) {
+      e.preventDefault();
+      const id = $(this).attr("href");
+      $("html, body").animate({
+        scrollTop: $(id).offset().top - 40
+      }, 500);
+    });
+  </script>
+
+</body>
+</html>
