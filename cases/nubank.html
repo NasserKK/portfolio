@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>UX Case — Nubank App Accessibility Improvement</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#5b7fff',
+            darkbg: '#0f0f12',
+            darkcard: '#1a1a1f',
+            darktext: '#c9c9d1',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-darkbg text-darktext font-sans">
+
+  <!-- Sidebar -->
+  <aside class="fixed left-0 top-0 h-screen w-64 bg-darkcard border-r border-gray-800 p-6 flex flex-col">
+    <h2 class="text-2xl font-bold text-white mb-8">My Portfolio</h2>
+
+    <nav class="flex-1">
+      <ul class="space-y-4 text-lg">
+        <li><a href="index.html" class="hover:text-primary">← Back</a></li>
+        <li><a href="#overview" class="hover:text-primary">Overview</a></li>
+        <li><a href="#context" class="hover:text-primary">Context</a></li>
+        <li><a href="#research" class="hover:text-primary">Research</a></li>
+        <li><a href="#solution" class="hover:text-primary">Solution</a></li>
+        <li><a href="#impact" class="hover:text-primary">Impact</a></li>
+        <li><a href="#learning" class="hover:text-primary">Learnings</a></li>
+      </ul>
+    </nav>
+
+    <footer class="text-sm text-gray-500">
+      © 2025 — Nasser Khalil
+    </footer>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="ml-64 p-12 space-y-16">
+
+    <!-- Hero -->
+    <section id="hero" class="space-y-4">
+      <h1 class="text-5xl font-bold text-white">
+        Accessibility Improvement — Nubank App
+      </h1>
+
+      <p class="text-lg text-gray-400 max-w-3xl">
+        Independent UX accessibility study applying Human-Centered Design principles
+        to improve the Nubank mobile app experience for users with visual impairments,
+        focusing on the Home screen.
+      </p>
+
+      <div class="w-full h-72 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500 text-xl">
+        HERO IMAGE — Nubank App (from PDF)
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overview" class="space-y-4">
+      <h2 class="text-3xl font-semibold text-white">Overview</h2>
+
+      <p>
+        This project aimed to apply <strong>Human-Centered Design</strong> to identify and propose
+        accessibility improvements in the Nubank mobile application.
+        The focus was on users with <strong>visual impairments</strong> and on the app’s
+        <strong>Home screen</strong>, the main entry point for core financial actions.
+      </p>
+
+      <p>
+        The study was conducted independently and structured as an accessibility audit,
+        usability testing, and UX redesign proposal.
+      </p>
+    </section>
+
+    <!-- Context -->
+    <section id="context" class="space-y-4">
+      <h2 class="text-3xl font-semibold text-white">Accessibility Context</h2>
+
+      <p>
+        Accessibility goes beyond visual contrast or font size. It is about removing barriers
+        that prevent people from interacting fully with digital products.
+        In financial apps, accessibility is especially critical, as it directly impacts
+        autonomy, trust, and inclusion.
+      </p>
+
+      <p>
+        This case focused on users with visual needs, grouped into:
+      </p>
+
+      <ul class="list-disc ml-6 space-y-2">
+        <li><strong>Color blindness (color vision deficiency)</strong></li>
+        <li><strong>Blind users</strong> relying on screen readers</li>
+        <li><strong>Low vision users</strong> who require assistive technologies</li>
+      </ul>
+
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        ACCESSIBILITY CONCEPTS / USER GROUPS IMAGE
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Research & Testing</h2>
+
+      <p>
+        To understand the real experience of users with visual impairments,
+        I conducted <strong>moderated accessibility testing</strong> with
+        <strong>four volunteers</strong>.
+      </p>
+
+      <p>
+        During the sessions:
+      </p>
+
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Participants were blindfolded</li>
+        <li>Only the screen reader was allowed</li>
+        <li>Real tasks were performed on the Nubank app</li>
+      </ul>
+
+      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+        <h3 class="text-xl font-bold text-white">Tasks Tested</h3>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>Check credit card limit</li>
+          <li>Hide account balance</li>
+          <li>Access the investments area</li>
+        </ul>
+      </div>
+
+      <p class="text-gray-400">
+        While the first two tasks were completed successfully,
+        <strong>all participants failed to complete the third task</strong>.
+      </p>
+
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        USABILITY TESTING PHOTOS / TASK SCREENS
+      </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="solution" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Key Insight & Solution</h2>
+
+      <p>
+        The issue was not related to visual contrast or typography —
+        Nubank already meets <strong>WCAG Level AAA</strong> contrast standards.
+      </p>
+
+      <p>
+        The problem was semantic and structural:
+        the <strong>“Shortcuts” area</strong> did not communicate, via screen reader,
+        that it was a horizontally scrollable list with additional options.
+      </p>
+
+      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+        <h3 class="text-xl font-bold text-white">Design Principle</h3>
+        <p>
+          Improve accessibility <strong>without compromising the visual interface</strong>.
+          Small semantic changes can unlock major usability gains.
+        </p>
+      </div>
+
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Explicit screen reader guidance (“Swipe right to explore”)</li>
+        <li>Item position feedback (“1 of 9”, “2 of 9”)</li>
+        <li>Clear identification of interactive elements</li>
+      </ul>
+
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        BEFORE / AFTER SCREEN READER FEEDBACK (FROM PDF)
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section id="impact" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Impact</h2>
+
+      <p class="text-gray-400">
+        Although this was an independent study, based on usability testing results
+        and accessibility best practices, the proposed solution would plausibly lead to:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">100%</p>
+          <p>task completion for screen reader users in the shortcuts area</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">0</p>
+          <p>visual UI changes required</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">High</p>
+          <p>accessibility compliance improvement</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learnings -->
+    <section id="learning" class="space-y-4 mb-32">
+      <h2 class="text-3xl font-semibold text-white">Learnings</h2>
+
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Accessibility issues are often semantic, not visual.</li>
+        <li>Screen reader experience must be intentionally designed.</li>
+        <li>Small changes can unlock major usability improvements.</li>
+        <li>Inclusive design improves the product for everyone.</li>
+        <li>Accessibility should be part of the design process, not a final checklist.</li>
+      </ul>
+
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        FINAL TAKEAWAYS / CONCLUSION IMAGE
+      </div>
+    </section>
+
+    <section id="tech" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Technologies Used</h2>
+
+      <p class="text-gray-400">
+        Tools, methodologies and technologies that supported the redesign, research,
+        prototyping and collaboration workflow throughout the project.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+
+        <div class="bg-darkcard border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center">
+          <div class="w-12 h-12 rounded-md mb-3"><img src="./imgs/figma.png" alt="" srcset=""></div>
+          <p class="text-sm text-gray-300">Figma</p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
