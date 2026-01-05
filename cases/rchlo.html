@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>UX/UI Case — RCHLO Quality System</title>
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Tailwind Dark Mode Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#5b7fff',
+            darkbg: '#0f0f12',
+            darkcard: '#1a1a1f',
+            darktext: '#c9c9d1',
+          }
+        }
+      }
+    }
+  </script>
+
+</head>
+<body class="bg-darkbg text-darktext font-sans">
+
+  <!-- Sidebar -->
+  <aside class="fixed left-0 top-0 h-screen w-64 bg-darkcard border-r border-gray-800 p-6 flex flex-col">
+    <h2 class="text-2xl font-bold text-white mb-8">My Portfolio</h2>
+
+    <nav class="flex-1">
+      <ul class="space-y-4 text-lg">
+        <li><a href="index.html" class="hover:text-primary">← Back</a></li>
+        <li><a href="#overview" class="hover:text-primary">Overview</a></li>
+        <li><a href="#context" class="hover:text-primary">Context</a></li>
+        <li><a href="#role" class="hover:text-primary">My Role</a></li>
+        <li><a href="#example" class="hover:text-primary">Key Flow</a></li>
+        <li><a href="#impact" class="hover:text-primary">Impact</a></li>
+        <li><a href="#learning" class="hover:text-primary">Learnings</a></li>
+      </ul>
+    </nav>
+
+    <footer class="text-sm text-gray-500">
+      © 2025 — Nasser Khalil
+    </footer>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="ml-64 p-12 space-y-16">
+
+    <!-- Hero Section -->
+    <section id="hero" class="space-y-4">
+      <h1 class="text-5xl font-bold text-white">UX/UI Case — RCHLO Quality System</h1>
+      <p class="text-lg text-gray-400">
+        Digital transformation of quality control processes (paper → web) for factory and workshop operations, designed for tablet-first usage.
+      </p>
+
+      <!-- Placeholder -->
+      <div class="w-full h-72 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500 text-xl">
+        CASE IMAGE HERE (hero)
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overview" class="space-y-4">
+      <h2 class="text-3xl font-semibold text-white">Overview</h2>
+      <p>
+        The <strong>RCHLO Quality System</strong> was an internal platform created to replace manual, paper-based quality control routines.
+        It was used by the <strong>Quality team</strong>, <strong>controllers</strong>, and professionals in <strong>factories and workshops</strong>.
+        The product was built as a <strong>web application with a tablet-first experience</strong>, supporting operational usage in production environments.
+      </p>
+    </section>
+
+    <!-- Context -->
+    <section id="context" class="space-y-4">
+      <h2 class="text-3xl font-semibold text-white">Problem Context</h2>
+
+      <p>
+        Before RCHLO, quality inspections and checklists were commonly recorded on paper. This generated frequent operational issues:
+      </p>
+
+      <ul class="list-disc ml-6 space-y-2">
+        <li><strong>Rework</strong> caused by incomplete or incorrect forms.</li>
+        <li><strong>Audit difficulty</strong> due to the lack of centralized and traceable data.</li>
+        <li><strong>Inconsistent standards</strong> across different factories and workshops.</li>
+        <li><strong>Filling errors</strong> without validation rules or mandatory fields.</li>
+        <li><strong>Illegible handwriting</strong> compromising data accuracy and decision-making.</li>
+      </ul>
+
+      <!-- Placeholder -->
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        PAPER PROCESS / LEGACY WORKFLOW IMAGE HERE
+      </div>
+    </section>
+
+    <!-- My Role -->
+    <section id="role" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">My Role</h2>
+
+      <p>
+        I worked as the <strong>sole UX/UI Designer</strong> on the project, leading design decisions in close partnership with the client and developers.
+        Research with real users was continuous throughout the process, following frameworks such as <strong>Design Thinking</strong> and the <strong>Double Diamond</strong>.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">1. Research & Discovery</h3>
+          <p>Frequent interviews with controllers and operational users to understand constraints, errors, and real workflows.</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">2. Flow Mapping (co-creation)</h3>
+          <p>Workflows were built from factory flowcharts provided by managers and refined through user conversations.</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">3. Prototyping in Figma</h3>
+          <p>Rapid prototyping to explore multiple solution paths, refine interactions, and reduce ambiguity for development.</p>
+        </div>
+
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
+          <h3 class="text-xl font-bold mb-3 text-white">4. Testing & Iteration</h3>
+          <p>Validation with real users who depended on the feature daily, ensuring the solution fit the operational reality.</p>
+        </div>
+      </div>
+
+      <!-- Placeholder -->
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        WIREFRAMES / USER TESTING NOTES / FLOWCHART IMAGE HERE
+      </div>
+    </section>
+
+    <!-- Key Flow -->
+    <section id="example" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Key Flow — Checklist Correction Request</h2>
+
+      <p>
+        One of the most sensitive challenges was enabling the correction of checklist fields without compromising audit integrity.
+        In practice, many checklists were rejected due to <strong>simple filling mistakes</strong> (e.g., measurements or defect quantities).
+        Allowing direct edits would open space for <strong>bad-faith behavior</strong>, where users could change values just to force approval.
+      </p>
+
+      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+        <h3 class="text-xl font-bold text-white">The Challenge</h3>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>Enable legitimate corrections to avoid unnecessary re-inspections.</li>
+          <li>Prevent fraud and data manipulation.</li>
+          <li>Maintain traceability and audit readiness.</li>
+        </ul>
+      </div>
+
+      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+        <h3 class="text-xl font-bold text-white">Solution</h3>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>The auditor submits a <strong>correction request</strong> instead of editing directly.</li>
+          <li>The request is sent to the <strong>area manager</strong> for review and approval.</li>
+          <li>Changed fields are highlighted in <strong>yellow</strong> and marked with a <strong>“!”</strong>.</li>
+          <li>Clicking the marker shows <strong>previous value vs proposed value</strong>.</li>
+          <li>A <strong>mandatory justification</strong> is required in all cases.</li>
+          <li>For defect-related changes, <strong>photo attachments</strong> are mandatory.</li>
+        </ul>
+      </div>
+
+      <!-- Placeholder -->
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        BEFORE / AFTER FLOW DIAGRAM + UI HIGHLIGHT EXAMPLES HERE
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section id="impact" class="space-y-6">
+      <h2 class="text-3xl font-semibold text-white">Impact</h2>
+
+      <p class="text-gray-400">
+        The project did not start with formal analytics instrumentation. However, based on operational feedback and observed workflow improvements,
+        we estimated conservative, realistic outcomes after implementation:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">20–30%</p>
+          <p>reduction in checklist-related rework</p>
+        </div>
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">15–25%</p>
+          <p>fewer re-inspections caused by filling errors</p>
+        </div>
+        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+          <p class="text-4xl font-bold text-primary">High</p>
+          <p>increase in traceability and audit readiness</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learnings -->
+    <section id="learning" class="space-y-4 mb-32">
+      <h2 class="text-3xl font-semibold text-white">Learnings</h2>
+
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Designing for <strong>risk and fraud prevention</strong> in enterprise workflows.</li>
+        <li>Using UX as a tool for <strong>governance and traceability</strong>, not only usability.</li>
+        <li>Co-creating with specialist users and translating real operational processes into digital flows.</li>
+        <li>Balancing <strong>flexibility and control</strong> in sensitive features.</li>
+        <li>Leading end-to-end design decisions as the sole designer and negotiating with multiple stakeholders.</li>
+        <li>Ensuring product continuity even when the client-side PM changed mid-sprint.</li>
+      </ul>
+
+      <!-- Placeholder -->
+      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+        RETROSPECTIVE NOTES / KEY TAKEAWAYS VISUAL HERE
+      </div>
+    </section>
+
+  </main>
+
+  <!-- jQuery smooth scroll -->
+  <script>
+    $("nav a").on("click", function(e) {
+      e.preventDefault();
+      const id = $(this).attr("href");
+      $("html, body").animate({
+        scrollTop: $(id).offset().top - 40
+      }, 500);
+    });
+  </script>
+
+</body>
+</html>
