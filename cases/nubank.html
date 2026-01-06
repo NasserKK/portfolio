@@ -9,6 +9,9 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- jQuery (for consistent smooth scroll + mobile drawer behavior) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <!-- Tailwind Config -->
   <script>
     tailwind.config = {
@@ -25,213 +28,372 @@
       }
     }
   </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    a:focus-visible {
+      outline: 2px solid rgba(91,127,255,0.6);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    /* Stepper dots */
+    .nav-dot { box-shadow: 0 0 0 1px rgba(255,255,255,0.12); }
+    .nav-dot.active {
+      background: rgba(91,127,255,0.95) !important;
+      border-color: rgba(91,127,255,0.35);
+      box-shadow: 0 0 0 4px rgba(91,127,255,0.18);
+    }
+    .nav-dot.done {
+      background: rgba(91,127,255,0.55) !important;
+      border-color: rgba(91,127,255,0.18);
+      box-shadow: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      #stepperFill { transition: none !important; }
+    }
+  </style>
 </head>
 
 <body class="bg-darkbg text-darktext font-sans">
 
-  <!-- Sidebar -->
-  <aside class="fixed left-0 top-0 h-screen w-64 bg-darkcard border-r border-gray-800 p-6 flex flex-col">
-    <h2 class="text-2xl font-bold text-white mb-8">My Portfolio</h2>
+  <!-- MOBILE TOP BAR -->
+  <header class="lg:hidden sticky top-0 z-50 bg-darkbg/80 backdrop-blur-md border-b border-gray-800">
+    <div class="px-5 py-4 flex items-center justify-between gap-3">
+      <a href="../index.html" class="text-sm text-gray-300 hover:text-primary transition">← Home</a>
+      <p class="text-sm text-gray-300 truncate">Nubank Accessibility</p>
+      <button id="openCaseNav"
+        class="px-3 py-2 rounded-lg bg-darkcard border border-gray-800 text-gray-200 hover:border-primary/40 transition">
+        Menu
+      </button>
+    </div>
+  </header>
 
-    <nav class="flex-1">
-      <ul class="space-y-4 text-lg">
-        <li><a href="../index.html" class="hover:text-primary">← Back</a></li>
-        <li><a href="#overview" class="hover:text-primary">Overview</a></li>
-        <li><a href="#context" class="hover:text-primary">Context</a></li>
-        <li><a href="#research" class="hover:text-primary">Research</a></li>
-        <li><a href="#solution" class="hover:text-primary">Solution</a></li>
-        <li><a href="#impact" class="hover:text-primary">Impact</a></li>
-        <li><a href="#learning" class="hover:text-primary">Learnings</a></li>
-      </ul>
-    </nav>
+  <!-- SIDEBAR (same background as body + stepper discrete) -->
+  <aside
+    id="caseSidebar"
+    class="fixed left-0 top-0 h-screen w-80
+           bg-darkbg border-r border-gray-800
+           p-6 flex flex-col z-50
+           -translate-x-full lg:translate-x-0 transition-transform duration-300"
+  >
+    <div class="relative">
 
-    <footer class="text-sm text-gray-500">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-semibold text-white leading-tight">Nubank Accessibility</h2>
+          <p class="text-xs tracking-widest uppercase text-gray-400 mt-1">Study Case</p>
+        </div>
+
+        <button id="closeCaseNav"
+          class="lg:hidden shrink-0 px-3 py-2 rounded-lg bg-darkcard border border-gray-800 text-gray-200 hover:border-primary/40 transition">
+          Close
+        </button>
+      </div>
+
+      <div class="mt-5 flex items-center gap-3">
+        <a href="../index.html"
+          class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-darkcard border border-gray-800
+                 text-gray-200 hover:border-primary/40 hover:text-primary transition">
+          <span class="text-sm">← Home</span>
+        </a>
+      </div>
+
+      <!-- Stepper (grid: line + dots/labels) -->
+      <div class="mt-8 grid grid-cols-[2px_1fr] gap-6 h-[360px]">
+
+        <!-- Line column -->
+        <div class="relative h-full">
+          <div class="w-full h-full bg-white/10 rounded-full"></div>
+          <div id="stepperFill"
+               class="absolute top-0 left-0 w-full h-0 bg-primary/80 rounded-full transition-[height] duration-200"></div>
+        </div>
+
+        <!-- Nav column -->
+        <nav class="h-full">
+          <ul class="h-full flex flex-col justify-between text-sm">
+
+            <li>
+              <a href="#overview"
+                 class="case-nav-link group flex items-center gap-3 text-gray-300 hover:text-white transition"
+                 data-section="overview" data-step="0">
+                
+                <span class="group-hover:text-primary transition">Overview</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#context"
+                 class="case-nav-link group flex items-center gap-3 text-gray-300 hover:text-white transition"
+                 data-section="context" data-step="1">
+                
+                <span class="group-hover:text-primary transition">Context</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#research"
+                 class="case-nav-link group flex items-center gap-3 text-gray-300 hover:text-white transition"
+                 data-section="research" data-step="2">
+                
+                <span class="group-hover:text-primary transition">Research</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#solution"
+                 class="case-nav-link group flex items-center gap-3 text-gray-300 hover:text-white transition"
+                 data-section="solution" data-step="3">
+                
+                <span class="group-hover:text-primary transition">Solution</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#impact"
+                 class="case-nav-link group flex items-center gap-3 text-gray-300 hover:text-white transition"
+                 data-section="impact" data-step="4">
+                
+                <span class="group-hover:text-primary transition">Impact</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#learning"
+                 class="case-nav-link group flex items-center gap-3 text-gray-300 hover:text-white transition"
+                 data-section="learning" data-step="5">
+                
+                <span class="group-hover:text-primary transition">Learnings</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#tech"
+                 class="case-nav-link group flex items-center gap-3 text-gray-300 hover:text-white transition"
+                 data-section="tech" data-step="6">
+                
+                <span class="group-hover:text-primary transition">Technologies</span>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <footer class="mt-auto pt-6 text-xs text-gray-500 border-t border-gray-800">
       © 2025 — Nasser Khalil
     </footer>
   </aside>
 
+  <!-- Mobile overlay (when sidebar open) -->
+  <div id="caseNavOverlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+
   <!-- Main Content -->
-  <main class="ml-64 p-12 space-y-16">
+  <main class="lg:ml-80 p-6 sm:p-10 lg:p-12 space-y-16 max-w-6xl">
 
     <!-- Hero -->
-    <section id="hero" class="space-y-4">
-      <h1 class="text-5xl font-bold text-white">
-        Accessibility Improvement — Nubank App
-      </h1>
+    <section id="hero" class="space-y-6">
+      <div class="space-y-3">
+        <p class="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-gray-400">
+          <span class="h-2 w-2 rounded-full bg-primary/80"></span>
+          Study Case
+        </p>
 
-      <p class="text-lg text-gray-400 max-w-3xl">
-        Independent UX accessibility study applying Human-Centered Design principles
-        to improve the Nubank mobile app experience for users with visual impairments,
-        focusing on the Home screen.
-      </p>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white">
+          Accessibility Improvement — Nubank App
+        </h1>
 
-      <div class="w-full h-72 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500 text-xl">
-        HERO IMAGE — Nubank App (from PDF)
+        <p class="text-lg text-gray-400 max-w-3xl">
+          Independent UX accessibility study applying Human-Centered Design principles
+          to improve the Nubank mobile app experience for users with visual impairments,
+          focusing on the Home screen.
+        </p>
       </div>
+
+      <div class="w-full h-72 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500 text-xl">
+        <img src="../imgs/nubank-hero.jpg" alt="" srcset="">
+      </div>
+
+      <div class="h-px bg-white/10"></div>
     </section>
 
     <!-- Overview -->
-    <section id="overview" class="space-y-4">
-      <h2 class="text-3xl font-semibold text-white">Overview</h2>
+    <section id="overview" class="space-y-4 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Overview</h2>
 
-      <p>
-        This project aimed to apply <strong>Human-Centered Design</strong> to identify and propose
-        accessibility improvements in the Nubank mobile application.
-        The focus was on users with <strong>visual impairments</strong> and on the app’s
-        <strong>Home screen</strong>, the main entry point for core financial actions.
-      </p>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4">
+        <p>
+          This project aimed to apply <strong>Human-Centered Design</strong> to identify and propose
+          accessibility improvements in the Nubank mobile application.
+          The focus was on users with <strong>visual impairments</strong> and on the app’s
+          <strong>Home screen</strong>, the main entry point for core financial actions.
+        </p>
 
-      <p>
-        The study was conducted independently and structured as an accessibility audit,
-        usability testing, and UX redesign proposal.
-      </p>
+        <p>
+          The study was conducted independently and structured as an accessibility audit,
+          usability testing, and UX redesign proposal.
+        </p>
+      </div>
     </section>
 
     <!-- Context -->
-    <section id="context" class="space-y-4">
-      <h2 class="text-3xl font-semibold text-white">Accessibility Context</h2>
+    <section id="context" class="space-y-4 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Accessibility Context</h2>
 
-      <p>
-        Accessibility goes beyond visual contrast or font size. It is about removing barriers
-        that prevent people from interacting fully with digital products.
-        In financial apps, accessibility is especially critical, as it directly impacts
-        autonomy, trust, and inclusion.
-      </p>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4">
+        <p>
+          Accessibility goes beyond visual contrast or font size. It is about removing barriers
+          that prevent people from interacting fully with digital products.
+          In financial apps, accessibility is especially critical, as it directly impacts
+          autonomy, trust, and inclusion.
+        </p>
 
-      <p>
-        This case focused on users with visual needs, grouped into:
-      </p>
+        <p>
+          This case focused on users with visual needs, grouped into:
+        </p>
 
-      <ul class="list-disc ml-6 space-y-2">
-        <li><strong>Color blindness (color vision deficiency)</strong></li>
-        <li><strong>Blind users</strong> relying on screen readers</li>
-        <li><strong>Low vision users</strong> who require assistive technologies</li>
-      </ul>
+        <ul class="list-disc ml-6 space-y-2 text-gray-300">
+          <li><strong>Color blindness (color vision deficiency)</strong></li>
+          <li><strong>Blind users</strong> relying on screen readers</li>
+          <li><strong>Low vision users</strong> who require assistive technologies</li>
+        </ul>
 
-      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
-        ACCESSIBILITY CONCEPTS / USER GROUPS IMAGE
+        <div class="w-full h-64 bg-black/20 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500">
+          ACCESSIBILITY CONCEPTS / USER GROUPS IMAGE
+        </div>
       </div>
     </section>
 
     <!-- Research -->
-    <section id="research" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">Research & Testing</h2>
+    <section id="research" class="space-y-6 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Research & Testing</h2>
 
-      <p>
-        To understand the real experience of users with visual impairments,
-        I conducted <strong>moderated accessibility testing</strong> with
-        <strong>four volunteers</strong>.
-      </p>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4">
+        <p>
+          To understand the real experience of users with visual impairments,
+          I conducted <strong>moderated accessibility testing</strong> with
+          <strong>four volunteers</strong>.
+        </p>
 
-      <p>
-        During the sessions:
-      </p>
+        <p>During the sessions:</p>
 
-      <ul class="list-disc ml-6 space-y-2">
-        <li>Participants were blindfolded</li>
-        <li>Only the screen reader was allowed</li>
-        <li>Real tasks were performed on the Nubank app</li>
-      </ul>
-
-      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
-        <h3 class="text-xl font-bold text-white">Tasks Tested</h3>
-        <ul class="list-disc ml-6 space-y-2">
-          <li>Check credit card limit</li>
-          <li>Hide account balance</li>
-          <li>Access the investments area</li>
+        <ul class="list-disc ml-6 space-y-2 text-gray-300">
+          <li>Participants were blindfolded</li>
+          <li>Only the screen reader was allowed</li>
+          <li>Real tasks were performed on the Nubank app</li>
         </ul>
-      </div>
 
-      <p class="text-gray-400">
-        While the first two tasks were completed successfully,
-        <strong>all participants failed to complete the third task</strong>.
-      </p>
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+          <h3 class="text-xl font-bold text-white">Tasks Tested</h3>
+          <ul class="list-disc ml-6 space-y-2 text-gray-300">
+            <li>Check credit card limit</li>
+            <li>Hide account balance</li>
+            <li>Access the investments area</li>
+          </ul>
+        </div>
 
-      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
-        USABILITY TESTING PHOTOS / TASK SCREENS
+        <p class="text-gray-400">
+          While the first two tasks were completed successfully,
+          <strong>all participants failed to complete the third task</strong>.
+        </p>
+
+        <div class="w-full h-64 bg-black/20 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500">
+          USABILITY TESTING PHOTOS / TASK SCREENS
+        </div>
       </div>
     </section>
 
     <!-- Solution -->
-    <section id="solution" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">Key Insight & Solution</h2>
+    <section id="solution" class="space-y-6 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Key Insight & Solution</h2>
 
-      <p>
-        The issue was not related to visual contrast or typography —
-        Nubank already meets <strong>WCAG Level AAA</strong> contrast standards.
-      </p>
-
-      <p>
-        The problem was semantic and structural:
-        the <strong>“Shortcuts” area</strong> did not communicate, via screen reader,
-        that it was a horizontally scrollable list with additional options.
-      </p>
-
-      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
-        <h3 class="text-xl font-bold text-white">Design Principle</h3>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4">
         <p>
-          Improve accessibility <strong>without compromising the visual interface</strong>.
-          Small semantic changes can unlock major usability gains.
+          The issue was not related to visual contrast or typography —
+          Nubank already meets <strong>WCAG Level AAA</strong> contrast standards.
         </p>
-      </div>
 
-      <ul class="list-disc ml-6 space-y-2">
-        <li>Explicit screen reader guidance (“Swipe right to explore”)</li>
-        <li>Item position feedback (“1 of 9”, “2 of 9”)</li>
-        <li>Clear identification of interactive elements</li>
-      </ul>
+        <p>
+          The problem was semantic and structural:
+          the <strong>“Shortcuts” area</strong> did not communicate, via screen reader,
+          that it was a horizontally scrollable list with additional options.
+        </p>
 
-      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
-        BEFORE / AFTER SCREEN READER FEEDBACK (FROM PDF)
+        <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
+          <h3 class="text-xl font-bold text-white">Design Principle</h3>
+          <p>
+            Improve accessibility <strong>without compromising the visual interface</strong>.
+            Small semantic changes can unlock major usability gains.
+          </p>
+        </div>
+
+        <ul class="list-disc ml-6 space-y-2 text-gray-300">
+          <li>Explicit screen reader guidance (“Swipe right to explore”)</li>
+          <li>Item position feedback (“1 of 9”, “2 of 9”)</li>
+          <li>Clear identification of interactive elements</li>
+        </ul>
+
+        <div class="w-full h-64 bg-black/20 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500">
+          BEFORE / AFTER SCREEN READER FEEDBACK (FROM PDF)
+        </div>
       </div>
     </section>
 
     <!-- Impact -->
-    <section id="impact" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">Impact</h2>
+    <section id="impact" class="space-y-6 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Impact</h2>
 
-      <p class="text-gray-400">
-        Although this was an independent study, based on usability testing results
-        and accessibility best practices, the proposed solution would plausibly lead to:
-      </p>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4">
+        <p class="text-gray-400">
+          Although this was an independent study, based on usability testing results
+          and accessibility best practices, the proposed solution would plausibly lead to:
+        </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
-          <p class="text-4xl font-bold text-primary">100%</p>
-          <p>task completion for screen reader users in the shortcuts area</p>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+            <p class="text-4xl font-bold text-primary">100%</p>
+            <p>task completion for screen reader users in the shortcuts area</p>
+          </div>
 
-        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
-          <p class="text-4xl font-bold text-primary">0</p>
-          <p>visual UI changes required</p>
-        </div>
+          <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+            <p class="text-4xl font-bold text-primary">0</p>
+            <p>visual UI changes required</p>
+          </div>
 
-        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
-          <p class="text-4xl font-bold text-primary">High</p>
-          <p>accessibility compliance improvement</p>
+          <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+            <p class="text-4xl font-bold text-primary">High</p>
+            <p>accessibility compliance improvement</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Learnings -->
-    <section id="learning" class="space-y-4 mb-32">
-      <h2 class="text-3xl font-semibold text-white">Learnings</h2>
+    <section id="learning" class="space-y-4 mb-32 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Learnings</h2>
 
-      <ul class="list-disc ml-6 space-y-2">
-        <li>Accessibility issues are often semantic, not visual.</li>
-        <li>Screen reader experience must be intentionally designed.</li>
-        <li>Small changes can unlock major usability improvements.</li>
-        <li>Inclusive design improves the product for everyone.</li>
-        <li>Accessibility should be part of the design process, not a final checklist.</li>
-      </ul>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4">
+        <ul class="list-disc ml-6 space-y-2 text-gray-300">
+          <li>Accessibility issues are often semantic, not visual.</li>
+          <li>Screen reader experience must be intentionally designed.</li>
+          <li>Small changes can unlock major usability improvements.</li>
+          <li>Inclusive design improves the product for everyone.</li>
+          <li>Accessibility should be part of the design process, not a final checklist.</li>
+        </ul>
 
-      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
-        FINAL TAKEAWAYS / CONCLUSION IMAGE
+        <div class="w-full h-64 bg-black/20 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500">
+          FINAL TAKEAWAYS / CONCLUSION IMAGE
+        </div>
       </div>
     </section>
 
-    <section id="tech" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">Technologies Used</h2>
+    <!-- Tech -->
+    <section id="tech" class="space-y-6 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Technologies Used</h2>
 
       <p class="text-gray-400">
         Tools, methodologies and technologies that supported the redesign, research,
@@ -239,17 +401,113 @@
       </p>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-
         <div class="bg-darkcard border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center">
-          <div class="w-12 h-12 rounded-md mb-3"><img src="../imgs/figma.png" alt="" srcset=""></div>
+          <div class="w-12 h-12 rounded-md mb-3 overflow-hidden">
+            <img src="../imgs/figma.png" alt="" class="w-full h-full object-contain" />
+          </div>
           <p class="text-sm text-gray-300">Figma</p>
         </div>
-
       </div>
-
     </section>
 
   </main>
+
+  <script>
+    // Smooth scroll with offset
+    function scrollToId(id) {
+      const $target = $(id);
+      if (!$target.length) return;
+      $("html, body").animate({ scrollTop: $target.offset().top - 24 }, 450);
+    }
+
+    // Nav click
+    $(".case-nav-link").on("click", function (e) {
+      e.preventDefault();
+      const id = $(this).attr("href");
+      scrollToId(id);
+
+      // close on mobile
+      if (window.matchMedia("(max-width: 1023px)").matches) {
+        $("#caseSidebar").addClass("-translate-x-full");
+        $("#caseNavOverlay").addClass("hidden");
+        $("body").removeClass("overflow-hidden");
+      }
+    });
+
+    // Mobile open/close
+    $("#openCaseNav").on("click", function () {
+      $("#caseSidebar").removeClass("-translate-x-full");
+      $("#caseNavOverlay").removeClass("hidden");
+      $("body").addClass("overflow-hidden");
+    });
+
+    $("#closeCaseNav, #caseNavOverlay").on("click", function () {
+      $("#caseSidebar").addClass("-translate-x-full");
+      $("#caseNavOverlay").addClass("hidden");
+      $("body").removeClass("overflow-hidden");
+    });
+
+    // Stepper logic (discrete fill)
+    const sectionIds = ["overview", "context", "research", "solution", "impact", "learning", "tech"];
+    const $links = $(".case-nav-link");
+    const $fill = $("#stepperFill");
+    const stepsCount = sectionIds.length;
+
+    function setState(activeId) {
+      const activeIndex = Math.max(0, sectionIds.indexOf(activeId));
+
+      $links.each(function () {
+        const sid = $(this).data("section");
+        const idx = sectionIds.indexOf(sid);
+        const $dot = $(this).find(".nav-dot");
+
+        $dot.removeClass("done active");
+
+        if (idx < activeIndex) $dot.addClass("done");
+        if (idx === activeIndex) $dot.addClass("active");
+
+        $(this).toggleClass("text-white", idx === activeIndex)
+               .toggleClass("text-gray-300", idx !== activeIndex);
+      });
+
+      const pct = stepsCount <= 1 ? 100 : (activeIndex / (stepsCount - 1)) * 100;
+      $fill.css("height", pct + "%");
+    }
+
+    function updateActiveFromScroll() {
+      const vh = window.innerHeight;
+      const refY = vh * 0.28;
+
+      let current = sectionIds[0];
+      let bestDist = Infinity;
+
+      for (const sid of sectionIds) {
+        const el = document.getElementById(sid);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        const dist = Math.abs(top - refY);
+        if (dist < bestDist) {
+          bestDist = dist;
+          current = sid;
+        }
+      }
+
+      setState(current);
+    }
+
+    updateActiveFromScroll();
+    window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
+    window.addEventListener("resize", updateActiveFromScroll);
+
+    // Close sidebar with ESC on mobile
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && window.matchMedia("(max-width: 1023px)").matches) {
+        $("#caseSidebar").addClass("-translate-x-full");
+        $("#caseNavOverlay").addClass("hidden");
+        $("body").removeClass("overflow-hidden");
+      }
+    });
+  </script>
 
 </body>
 </html>

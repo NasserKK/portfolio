@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +7,6 @@
   <title>UX/UI Case — Pirâmide 360 ERP</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
@@ -27,157 +25,342 @@
     }
   </script>
 
+  <style>
+    html { scroll-behavior: smooth; }
+
+    a:focus-visible {
+      outline: 2px solid rgba(91,127,255,0.6);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    /* Stepper geometry (stable, not content-height dependent) */
+    .stepper-track {
+      position: absolute;
+      left: 14px;          /* aligns with dots */
+      top: 124px;          /* below header buttons */
+      bottom: 84px;        /* above footer */
+      width: 2px;
+      background: rgba(255,255,255,0.10);
+      border-radius: 999px;
+    }
+
+    .stepper-fill {
+      position: absolute;
+      left: 14px;
+      top: 124px;
+      width: 2px;
+      height: 0%;
+      background: rgba(91,127,255,0.85);
+      border-radius: 999px;
+      transition: height .18s ease;
+    }
+
+    .nav-dot {
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+    }
+
+    /* Active: filled dot */
+    .nav-dot.active {
+      background: rgba(91,127,255,0.95) !important;
+      border-color: rgba(91,127,255,0.35);
+      box-shadow: 0 0 0 4px rgba(91,127,255,0.18);
+    }
+
+    /* Completed: subtle filled dot */
+    .nav-dot.done {
+      background: rgba(91,127,255,0.55) !important;
+      border-color: rgba(91,127,255,0.18);
+      box-shadow: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .stepper-fill { transition: none; }
+    }
+  </style>
 </head>
 
 <body class="bg-darkbg text-darktext font-sans">
 
-  <aside class="fixed left-0 top-0 h-screen w-64 bg-darkcard border-r border-gray-800 p-6 flex flex-col">
-    <h2 class="text-2xl font-bold text-white mb-8">My Portfolio</h2>
+  <!-- MOBILE TOP BAR -->
+  <header class="lg:hidden sticky top-0 z-50 bg-darkbg/80 backdrop-blur-md border-b border-gray-800">
+    <div class="px-5 py-4 flex items-center justify-between gap-3">
+      <a href="../index.html" class="text-sm text-gray-300 hover:text-primary transition">← Home</a>
+      <p class="text-sm text-gray-300 truncate">Pirâmide 360 ERP</p>
+      <button id="openCaseNav"
+        class="px-3 py-2 rounded-lg bg-darkcard border border-gray-800 text-gray-200 hover:border-primary/40 transition">
+        Menu
+      </button>
+    </div>
+  </header>
 
-    <nav class="flex-1">
-      <ul class="space-y-4 text-lg">
-        <li><a href="../index.html" class="hover:text-primary">← Back</a></li>
-        <li><a href="#overview" class="hover:text-primary">Overview</a></li>
-        <li><a href="#context" class="hover:text-primary">Context</a></li>
-        <li><a href="#role" class="hover:text-primary">My Role</a></li>
-        <li><a href="#example" class="hover:text-primary">Flow Example</a></li>
-        <li><a href="#impact" class="hover:text-primary">Impact</a></li>
-        <li><a href="#learning" class="hover:text-primary">Learnings</a></li>
-      </ul>
-    </nav>
+  <!-- SIDEBAR (Stepper) -->
+  <aside
+    id="caseSidebar"
+    class="fixed left-0 top-0 h-screen w-80
+           bg-darkbg border-r border-gray-800
+           p-6 flex flex-col z-50
+           -translate-x-full lg:translate-x-0 transition-transform duration-300"
+  >
+    <div class="relative">
 
-    <footer class="text-sm text-gray-500">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h2 class="text-lg font-semibold text-white leading-tight">Pirâmide 360 ERP</h2>
+          <p class="text-xs tracking-widest uppercase text-gray-400 mt-1">Real Case</p>
+        </div>
+
+        <button id="closeCaseNav"
+          class="lg:hidden shrink-0 px-3 py-2 rounded-lg bg-darkcard border border-gray-800 text-gray-200 hover:border-primary/40 transition">
+          Close
+        </button>
+      </div>
+
+      <div class="mt-5 flex items-center gap-3">
+        <a href="../index.html"
+          class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-darkcard border border-gray-800
+                 text-gray-200 hover:border-primary/40 hover:text-primary transition">
+          <span class="text-sm">← Home</span>
+        </a>
+      </div>
+
+      <!-- Stepper area (line + nav share the same height) -->
+<!-- Stepper container -->
+<div class="mt-8 grid grid-cols-[2px_1fr] gap-6 h-[360px]">
+
+  <!-- Line column -->
+  <div class="relative h-full">
+    <!-- Track -->
+    <div class="w-full h-full bg-white/10 rounded-full"></div>
+
+    <!-- Fill -->
+    <div id="stepperFill"
+         class="absolute top-0 left-0 w-full h-0 bg-primary/80 rounded-full transition-[height] duration-200"></div>
+  </div>
+
+  <!-- Nav column -->
+  <nav class="h-full">
+    <ul class="h-full flex flex-col justify-between text-sm">
+
+      <li>
+        <a href="#overview"
+           class="case-nav-link group flex items-center text-gray-300 hover:text-white transition"
+           data-section="overview" data-step="0">
+          <span class="group-hover:text-primary transition">Overview</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#context"
+           class="case-nav-link group flex items-center text-gray-300 hover:text-white transition"
+           data-section="context" data-step="1">
+          <span class="group-hover:text-primary transition">Context</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#role"
+           class="case-nav-link group flex items-center text-gray-300 hover:text-white transition"
+           data-section="role" data-step="2">
+          <span class="group-hover:text-primary transition">My Role</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#example"
+           class="case-nav-link group flex items-center text-gray-300 hover:text-white transition"
+           data-section="example" data-step="3">
+          <span class="group-hover:text-primary transition">Flow Example</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#impact"
+           class="case-nav-link group flex items-center text-gray-300 hover:text-white transition"
+           data-section="impact" data-step="4">
+          <span class="group-hover:text-primary transition">Impact</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#learning"
+           class="case-nav-link group flex items-center text-gray-300 hover:text-white transition"
+           data-section="learning" data-step="5">
+          <span class="group-hover:text-primary transition">Learnings</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#tech"
+           class="case-nav-link group flex items-center text-gray-300 hover:text-white transition"
+           data-section="tech" data-step="6">
+          <span class="group-hover:text-primary transition">Technologies</span>
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+</div>
+
+
+    </div>
+
+    <footer class="mt-auto pt-6 text-xs text-gray-500 border-t border-gray-800">
       © 2025 — Nasser Khalil
     </footer>
   </aside>
 
-  <main class="ml-64 p-12 space-y-16">
+  <!-- Mobile overlay (when sidebar open) -->
+  <div id="caseNavOverlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
 
-    <section id="hero" class="space-y-4">
-      <h1 class="text-5xl font-bold text-white">UX/UI Case — Pirâmide 360 ERP</h1>
-      <p class="text-lg text-gray-400">
-        Migration from desktop ERP to Web + creation of the Gizé Design System.
-      </p>
+  <!-- MAIN CONTENT -->
+  <main class="lg:ml-80 p-6 sm:p-10 lg:p-12 space-y-16 max-w-6xl">
 
-      <div class="w-full h-72 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500 text-xl">
+    <section id="hero" class="space-y-6">
+      <div class="space-y-3">
+        <p class="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-gray-400">
+          <span class="h-2 w-2 rounded-full bg-primary/80"></span>
+          Real Case
+        </p>
+
+        <h1 class="text-4xl sm:text-5xl font-bold text-white">UX/UI Case — Pirâmide 360 ERP</h1>
+        <p class="text-lg text-gray-400">
+          Migration from desktop ERP to Web + creation of the Gizé Design System.
+        </p>
+      </div>
+
+      <div class="w-full h-72 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500 text-xl">
         CASE IMAGE HERE (hero)
       </div>
+
+      <div class="h-px bg-white/10"></div>
     </section>
 
-    <section id="overview" class="space-y-4">
-      <h2 class="text-3xl font-semibold text-white">Overview</h2>
-      <p>
-        Pirâmide 360 ERP is an enterprise platform used by mid and large-sized companies.
-        The modernization required migrating more than <strong>1300 screens</strong> to the Web,
-        along with the creation of a scalable new Design System.
-      </p>
-    </section>
-
-    <section id="context" class="space-y-4">
-      <h2 class="text-3xl font-semibold text-white">Problem Context</h2>
-
-      <p>
-        The original desktop system had technical limitations, compromised usability,
-        and accumulated inconsistencies over the years — requiring a full rebuild and
-        the creation of a Design System to standardize the entire platform.
-      </p>
-
-      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
-        OLD SCREENS IMAGE HERE
+    <section id="overview" class="space-y-4 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Overview</h2>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7">
+        <p>
+          Pirâmide 360 ERP is an enterprise platform used by mid and large-sized companies.
+          The modernization required migrating more than <strong>1300 screens</strong> to the Web,
+          along with the creation of a scalable new Design System.
+        </p>
       </div>
     </section>
 
-    <section id="role" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">My Role</h2>
+    <section id="context" class="space-y-4 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Problem Context</h2>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-4">
+        <p>
+          The original desktop system had technical limitations, compromised usability,
+          and accumulated inconsistencies over the years — requiring a full rebuild and
+          the creation of a Design System to standardize the entire platform.
+        </p>
+
+        <div class="w-full h-64 bg-black/20 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500">
+          OLD SCREENS IMAGE HERE
+        </div>
+      </div>
+    </section>
+
+    <section id="role" class="space-y-6 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">My Role</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
-          <h3 class="text-xl font-bold mb-3 text-white">1. Analysis & Understanding</h3>
-          <p>Interviews with internal users, study of the system manual, and flow mapping.</p>
+        <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+          <h3 class="text-lg font-semibold mb-2 text-white">1. Analysis & Understanding</h3>
+          <p class="text-gray-300">Interviews with internal users, study of the system manual, and flow mapping.</p>
         </div>
 
-        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
-          <h3 class="text-xl font-bold mb-3 text-white">2. UX Redesign</h3>
-          <p>Reorganization of information hierarchy, flow simplification, and prototyping.</p>
+        <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+          <h3 class="text-lg font-semibold mb-2 text-white">2. UX Redesign</h3>
+          <p class="text-gray-300">Reorganization of information hierarchy, flow simplification, and prototyping.</p>
         </div>
 
-        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
-          <h3 class="text-xl font-bold mb-3 text-white">3. UI & Design System</h3>
-          <p>Active participation in the creation of Gizé and new components.</p>
+        <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+          <h3 class="text-lg font-semibold mb-2 text-white">3. UI & Design System</h3>
+          <p class="text-gray-300">Active participation in the creation of Gizé and new components.</p>
         </div>
 
-        <div class="bg-darkcard p-6 rounded-xl border border-gray-800">
-          <h3 class="text-xl font-bold mb-3 text-white">4. Validation</h3>
-          <p>Internal testing of critical flows and alignment with developers.</p>
+        <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+          <h3 class="text-lg font-semibold mb-2 text-white">4. Validation</h3>
+          <p class="text-gray-300">Internal testing of critical flows and alignment with developers.</p>
         </div>
       </div>
 
-      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+      <div class="w-full h-64 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500">
         DESIGN SYSTEM COMPONENTS HERE
       </div>
     </section>
 
-    <section id="example" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">Redesigned Flow Example — Product Management</h2>
+    <section id="example" class="space-y-6 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Redesigned Flow Example — Product Management</h2>
 
-      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
-        <h3 class="text-xl font-bold text-white">Before (Desktop)</h3>
-        <ul class="list-disc ml-6 space-y-2">
-          <li>More than 40 fields visible simultaneously.</li>
-          <li>Lack of visual hierarchy.</li>
-          <li>Fragmented process.</li>
-          <li>High error rate.</li>
-        </ul>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white/5 border border-white/10 p-6 rounded-2xl space-y-3">
+          <h3 class="text-lg font-semibold text-white">Before (Desktop)</h3>
+          <ul class="list-disc ml-6 space-y-2 text-gray-300">
+            <li>More than 40 fields visible simultaneously.</li>
+            <li>Lack of visual hierarchy.</li>
+            <li>Fragmented process.</li>
+            <li>High error rate.</li>
+          </ul>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 p-6 rounded-2xl space-y-3">
+          <h3 class="text-lg font-semibold text-white">After (Web)</h3>
+          <ul class="list-disc ml-6 space-y-2 text-gray-300">
+            <li>Divided into logical tabs.</li>
+            <li>New "field-group" component in the Design System.</li>
+            <li>Continuous flow on a single page.</li>
+            <li>Informative tooltips for fiscal fields.</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="bg-darkcard p-6 rounded-xl border border-gray-800 space-y-3">
-        <h3 class="text-xl font-bold text-white">After (Web)</h3>
-        <ul class="list-disc ml-6 space-y-2">
-          <li>Divided into logical tabs.</li>
-          <li>New "field-group" component in the Design System.</li>
-          <li>Continuous flow on a single page.</li>
-          <li>Informative tooltips for fiscal fields.</li>
-        </ul>
-      </div>
-
-      <div class="w-full h-64 bg-gray-800 rounded-xl flex items-center justify-center text-gray-500">
+      <div class="w-full h-64 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-gray-500">
         BEFORE / AFTER COMPARISON IMAGE HERE
       </div>
     </section>
 
-    <section id="impact" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">Impact</h2>
+    <section id="impact" class="space-y-6 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Impact</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
           <p class="text-4xl font-bold text-primary">50%</p>
-          <p>reduction in registration time</p>
+          <p class="text-gray-300 mt-1">reduction in registration time</p>
         </div>
-        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
           <p class="text-4xl font-bold text-primary">40%</p>
-          <p>fewer internal errors</p>
+          <p class="text-gray-300 mt-1">fewer internal errors</p>
         </div>
-        <div class="bg-darkcard p-6 rounded-xl text-center border border-gray-800">
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
           <p class="text-4xl font-bold text-primary">30%</p>
-          <p>improvement in learning curve</p>
+          <p class="text-gray-300 mt-1">improvement in learning curve</p>
         </div>
       </div>
     </section>
 
-    <section id="learning" class="space-y-4 mb-32">
-      <h2 class="text-3xl font-semibold text-white">Learnings</h2>
+    <section id="learning" class="space-y-4 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Learnings</h2>
 
-      <ul class="list-disc ml-6 space-y-2">
-        <li>Complex business rules of ERPs.</li>
-        <li>Conducting research with real users.</li>
-        <li>Decision-making based on usability heuristics.</li>
-        <li>Creation and scalability of Design Systems.</li>
-        <li>Multidisciplinary collaboration and technical alignment.</li>
-      </ul>
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7">
+        <ul class="list-disc ml-6 space-y-2 text-gray-300">
+          <li>Complex business rules of ERPs.</li>
+          <li>Conducting research with real users.</li>
+          <li>Decision-making based on usability heuristics.</li>
+          <li>Creation and scalability of Design Systems.</li>
+          <li>Multidisciplinary collaboration and technical alignment.</li>
+        </ul>
+      </div>
     </section>
 
-    <section id="tech" class="space-y-6">
-      <h2 class="text-3xl font-semibold text-white">Technologies Used</h2>
+    <section id="tech" class="space-y-6 pb-24 scroll-mt-24">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white">Technologies Used</h2>
 
       <p class="text-gray-400">
         Tools, methodologies and technologies that supported the redesign, research,
@@ -185,32 +368,122 @@
       </p>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-
-        <div class="bg-darkcard border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center">
-          <div class="w-12 h-12 rounded-md mb-3"><img src="../imgs/figma.png" alt="" srcset=""></div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
+          <div class="w-12 h-12 rounded-md mb-3 overflow-hidden">
+            <img src="../imgs/figma.png" alt="" class="w-full h-full object-contain" />
+          </div>
           <p class="text-sm text-gray-300">Figma</p>
         </div>
 
-        <div class="bg-darkcard border border-gray-800 rounded-xl p-6 flex flex-col items-center justify-center">
-          <div class="w-12 h-12 rounded-md mb-3"><img src="../imgs/wordpress.png" alt="" srcset=""></div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center">
+          <div class="w-12 h-12 rounded-md mb-3 overflow-hidden">
+            <img src="../imgs/wordpress.png" alt="" class="w-full h-full object-contain" />
+          </div>
           <p class="text-sm text-gray-300">Wordpress</p>
         </div>
-
       </div>
-
     </section>
+
   </main>
 
   <script>
-    $("nav a").on("click", function (e) {
+    // Smooth scroll with offset
+    function scrollToId(id) {
+      const $target = $(id);
+      if (!$target.length) return;
+      $("html, body").animate({ scrollTop: $target.offset().top - 24 }, 450);
+    }
+
+    // Nav click
+    $(".case-nav-link").on("click", function (e) {
       e.preventDefault();
       const id = $(this).attr("href");
-      $("html, body").animate({
-        scrollTop: $(id).offset().top - 40
-      }, 500);
+      scrollToId(id);
+
+      // close on mobile
+      if (window.matchMedia("(max-width: 1023px)").matches) {
+        $("#caseSidebar").addClass("-translate-x-full");
+        $("#caseNavOverlay").addClass("hidden");
+        $("body").removeClass("overflow-hidden");
+      }
+    });
+
+    // Mobile open/close
+    $("#openCaseNav").on("click", function () {
+      $("#caseSidebar").removeClass("-translate-x-full");
+      $("#caseNavOverlay").removeClass("hidden");
+      $("body").addClass("overflow-hidden");
+    });
+
+    $("#closeCaseNav, #caseNavOverlay").on("click", function () {
+      $("#caseSidebar").addClass("-translate-x-full");
+      $("#caseNavOverlay").addClass("hidden");
+      $("body").removeClass("overflow-hidden");
+    });
+
+    // Stepper logic (discrete fill)
+    const sectionIds = ["overview", "context", "role", "example", "impact", "learning", "tech"];
+    const $links = $(".case-nav-link");
+    const $fill = $("#stepperFill");
+    const stepsCount = sectionIds.length;
+
+    function setState(activeId) {
+      const activeIndex = Math.max(0, sectionIds.indexOf(activeId));
+
+      // Mark dots: done / active / pending
+      $links.each(function () {
+        const sid = $(this).data("section");
+        const idx = sectionIds.indexOf(sid);
+        const $dot = $(this).find(".nav-dot");
+
+        $dot.removeClass("done active");
+
+        if (idx < activeIndex) $dot.addClass("done");
+        if (idx === activeIndex) $dot.addClass("active");
+
+        $(this).toggleClass("text-white", idx === activeIndex)
+               .toggleClass("text-gray-300", idx !== activeIndex);
+      });
+
+      // Fill segments: 0..100% by step index
+      const pct = stepsCount <= 1 ? 100 : (activeIndex / (stepsCount - 1)) * 100;
+      $fill.css("height", pct + "%");
+    }
+
+    function updateActiveFromScroll() {
+      const vh = window.innerHeight;
+      const refY = vh * 0.28; // stable reference line
+
+      let current = sectionIds[0];
+      let bestDist = Infinity;
+
+      for (const sid of sectionIds) {
+        const el = document.getElementById(sid);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        const dist = Math.abs(top - refY);
+        if (dist < bestDist) {
+          bestDist = dist;
+          current = sid;
+        }
+      }
+
+      setState(current);
+    }
+
+    updateActiveFromScroll();
+    window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
+    window.addEventListener("resize", updateActiveFromScroll);
+
+    // Close sidebar with ESC on mobile
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && window.matchMedia("(max-width: 1023px)").matches) {
+        $("#caseSidebar").addClass("-translate-x-full");
+        $("#caseNavOverlay").addClass("hidden");
+        $("body").removeClass("overflow-hidden");
+      }
     });
   </script>
 
 </body>
-
 </html>
