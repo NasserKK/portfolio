@@ -404,20 +404,17 @@
   </main>
 
   <script>
-    // Smooth scroll with offset
     function scrollToId(id) {
       const $target = $(id);
       if (!$target.length) return;
       $("html, body").animate({ scrollTop: $target.offset().top - 24 }, 450);
     }
 
-    // Nav click
     $(".case-nav-link").on("click", function (e) {
       e.preventDefault();
       const id = $(this).attr("href");
       scrollToId(id);
 
-      // close on mobile
       if (window.matchMedia("(max-width: 1023px)").matches) {
         $("#caseSidebar").addClass("-translate-x-full");
         $("#caseNavOverlay").addClass("hidden");
@@ -425,7 +422,6 @@
       }
     });
 
-    // Mobile open/close
     $("#openCaseNav").on("click", function () {
       $("#caseSidebar").removeClass("-translate-x-full");
       $("#caseNavOverlay").removeClass("hidden");
@@ -438,7 +434,6 @@
       $("body").removeClass("overflow-hidden");
     });
 
-    // Stepper logic (discrete fill)
     const sectionIds = ["overview", "context", "role", "example", "impact", "learning", "tech"];
     const $links = $(".case-nav-link");
     const $fill = $("#stepperFill");
@@ -490,7 +485,6 @@
     window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
     window.addEventListener("resize", updateActiveFromScroll);
 
-    // Close sidebar with ESC on mobile
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && window.matchMedia("(max-width: 1023px)").matches) {
         $("#caseSidebar").addClass("-translate-x-full");
